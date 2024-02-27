@@ -11,4 +11,7 @@ Enter the number
 Enter the number
 6
 Total 3 numbers are valid numbers. 
+class number
+{
 
+};
