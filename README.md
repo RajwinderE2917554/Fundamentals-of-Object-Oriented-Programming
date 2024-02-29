@@ -12,3 +12,36 @@ Enter the number
 6
 Total 3 numbers are valid numbers. 
 
+
+
+#include<iostream>
+using namespace std;
+class abc{
+    int n,count=0;
+    public:
+    void get_data()
+    {
+        
+        while(1)
+        {
+            cout<<"enter the number "<<endl;
+            cin>>n;
+            if(n%8==0)
+            {
+                count++;
+            }
+            else {
+                cout<<"numbers divisibe by 8 are "<<count<<endl;
+            break;
+             }
+           
+        }
+    }
+
+};
+int main()
+{
+    abc a;
+    a.get_data();
+    return 0;
+}
