@@ -12,3 +12,30 @@ Enter the number
 6
 Total 3 numbers are valid numbers. 
 
+
+
+#include<iostream>
+using namespace std;
+class Divisible{
+	int n,num;
+	static int count;
+	public:
+		void get_data(){
+			while(1){
+				cout<<"Enter a number: ";
+				cin>>num;
+				if(num%8==0){
+					count++;
+				}
+				else{
+					cout<<"Total "<<count<<" numbers are valid"<<endl;
+					break;
+				}
+			}
+		}
+};int Divisible::count=0;
+int main(){
+	Divisible obj;
+	obj.get_data();
+	return 0;
+}
