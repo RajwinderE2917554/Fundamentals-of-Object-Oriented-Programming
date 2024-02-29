@@ -12,3 +12,38 @@ Enter the number
 6
 Total 3 numbers are valid numbers. 
 
+
+
+
+
+
+#include<iostream>
+using namespace std;
+class Divisible{
+	int n,num;
+	static int count;
+	public:
+		void get_data(){
+			cout<<"Enter a number: ";
+			cin>>num;
+			if(num%8==0){
+				cout<<"Number is divisible by 8."<<endl;
+				count++;
+				cout<<"Total number divisible by 8: "<<count<<endl;
+			}
+			else{
+				cout<<"Number is not divisible by 8."<<endl;
+			}
+			cout<<"\n\n";
+		}
+};int Divisible::count=0;
+int main(){
+	Divisible obj;
+	int n;
+	cout<<"Enter how many numbers want to enter: ";
+	cin>>n;
+	for(int i=0;i<n;i++){
+		obj.get_data();
+	}
+	return 0;
+}
