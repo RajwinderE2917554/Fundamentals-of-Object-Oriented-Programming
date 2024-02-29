@@ -12,3 +12,16 @@ Enter the number
 6
 Total 3 numbers are valid numbers. 
 
+-------------------------------------------------------------------------
+
+#include<iostream>
+using namespace std;
+int main(){
+	int n=0,count=0;
+	while(n%8==0){
+		count++;
+		cout<<"Enter Number:";
+		cin>>n;
+	}
+	cout<<"Total valid numbers:"<<count-1;
+}
