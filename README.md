@@ -12,3 +12,25 @@ Enter the number
 6
 Total 3 numbers are valid numbers. 
 
+#include<iostream>
+using namespace std;
+int main()
+{
+	int n,num,count=0;
+	cout<<"enter number of elements";
+	cin>>n;
+	for(int i=1;i<=n;i++)
+	{
+		cout<<"\nenter a number:\n";
+		cin>>num;
+		if(num%8==0){
+			cout<<"number is valid";
+			count++;
+		}
+		else{
+			cout<<"invalid number"<<endl;
+		}
+ }
+	cout<<"number of valid numbers are:"<<count;
+	return 0;
+}
