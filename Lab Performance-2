@@ -12,3 +12,193 @@ Task-2:
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+
+
+2310997121
+JASHANJOT SINGH
+BCA 2C 
+
+****task1 solution:*****
+
+----> this program has been made using concpets of inhertiance and concepts of function overriding & function overloading 
+
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+// base class for other shapes class
+class Shape
+{
+public:
+    // virtual function is being used here so that derived classes (circel,triangle,rectangle)
+    // can override it and make their own implementation(concept of polymorphism is being implemented here )
+    virtual double getArea() = 0;
+    virtual double getPerimeter() = 0;
+};
+
+
+
+class Rectangle : public Shape //(derived from shape class in public visibility mode)
+{
+private:
+    double length;
+    double width;
+
+public:
+    Rectangle(double len, double brd)//permeterised concstructor being used here 
+    {
+        length = len;
+        width = brd;
+    }
+
+    //  Overrides the getArea  function from the base class
+    double getArea()
+    {
+        return length * width;
+    }
+
+    //  Overrides the getperimeter  function from the base class
+    double getPerimeter()
+    {
+        return 2 * (length + width);
+    }
+
+    // Function overloading for sector area of rectangle(concept of polymorphism)
+    double getArea(double len1, double width1, double angle)
+    {
+        double sec_area = angle / 360.0 * len1 * width1;
+        return sec_area;
+    }
+};
+
+class Triangle : public Shape //derived from shape class 
+{
+private:
+    double sideA,sideB,sideC,base,height;
+    
+public:
+    Triangle(double s1, double s2, double s3, double h, double b)
+    {
+
+        sideA = s1;
+        sideB = s2;
+        sideC = s3;
+        height = h;
+        base = b;
+    }
+
+    // getarea function from base class i.e shape class again
+    double getArea()
+    {
+        double s = (base * height) / 2;
+        return s;
+    }
+
+    double getPerimeter()
+    {
+        return sideA + sideB + sideC;
+    }
+
+    // Function overloading (polymorphism)
+    double getArea(double s1, double s2, double s3, double angle)
+    {
+        double area_with_heronsformula = sqrt((s1 + s2 + s3) * (-s1 + s2 + s3) * (s1 - s2 + s3) * (s1 + s2 - s3));
+        return (angle / 360.0) * area_with_heronsformula;
+    }
+};
+class Circle : public Shape //(derived from shape class )
+{
+private:
+    double radius;
+
+public:
+    
+    Circle(double rad)
+    {
+        radius = rad;
+    }
+
+    // Overrides getArea function 
+    double getArea()
+    {
+        return 3.14 * radius * radius;
+    }
+
+    double getPerimeter()
+    {
+        return 2 * 3.14 * radius;
+    }
+
+    double getArea(int r1, int r2, int angle)
+    {
+        double area2 = (angle / 360.0) * 3.14 * r1 * r2;
+        return area2;
+    }
+};
+
+int main()
+{
+    // Creating objects of the derived classes
+    Rectangle obj_of_rectangle(4, 5);
+    Triangle obj_of_triangle(3, 4, 5, 3, 4);
+    Circle obj_of_circle(5);
+
+
+    // calling get area and getperimeter  functions using objects of all derived classes
+    cout << "Area of Circle: " << obj_of_circle.getArea() << endl;
+    cout << "Perimeter of Circle: " << obj_of_circle.getPerimeter() << endl;
+    cout << "Area of Rectangle: " << obj_of_rectangle.getArea() << endl;
+    cout << "Perimeter of Rectangle: " << obj_of_rectangle.getPerimeter() << endl;
+    cout << "Area of Triangle: " << obj_of_triangle.getArea() << endl;
+    cout << "Perimeter of Triangle: " << obj_of_triangle.getPerimeter() << endl;
+
+    return 0;
+}
+
+
+****task 2 solution:*****
+
+----> this program has been made using concpets of operator overloading by using a single friend function
+
+#include <iostream>
+using namespace std;
+class class_2;
+class class_1
+{
+private:
+    float totalsales;
+
+public:
+    class_1(float TS) : totalsales(TS) {}     // intialiser list has been used here
+    float friend operator+(class_1, class_2); // here operator overloading  will happen in friend function for both classes
+};
+class class_2
+{
+private:
+    float totalsales;
+
+public:
+    class_2(float TS) : totalsales(TS) {}
+    float friend operator+(class_1, class_2);
+};
+float operator+(class_1 obj1, class_2 obj2) // defination of friend function outside classs ****without scope resolution****
+{
+    return obj1.totalsales + obj2.totalsales; // same operator returning values for both classes
+}
+int main()
+{
+    float sale1, sale2;
+    cout << "enter sales for class 1:";
+    cin >> sale1;
+    cout << "enter sales for class 2:";
+    cin >> sale2;
+
+    // creating objects for both classes
+    class_1 obj1(sale1);
+    class_2 obj2(sale2);
+    float totalsales = obj1 + obj2;
+    cout << "The total sales are : " << totalsales << endl;
+    return 0;
+}
+
+
