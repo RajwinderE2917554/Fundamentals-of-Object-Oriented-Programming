@@ -1,0 +1,87 @@
+#include <iostream>
+#include <vector> // to store class objects in a smart object array (used in entry function, line number 69.)
+
+//parent class
+class Shape {
+public:
+    // deconstructor to free memmory to avoid memory leak; 
+    virtual ~Shape() {}
+
+    virtual double area() const = 0;
+    virtual double perimeter() const = 0;
+};
+
+//child class to shape
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : radius(r) {}
+
+    double area() const override {
+        return 3.14159 * radius * radius;
+    }
+
+    double perimeter() const override {
+        return 2 * 3.14159 * radius;
+    }
+};
+
+//child class to shape
+class Rectangle : public Shape {
+private:
+    double length;
+    double width;
+
+public:
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    double area() const override {
+        return length * width;
+    }
+
+    double perimeter() const override {
+        return 2 * (length + width);
+    }
+};
+
+//child class to shape
+class Triangle : public Shape {
+private:
+    double sideA;
+    double sideB;
+    double sideC;
+
+public:
+    Triangle(double a, double b, double c) : sideA(a), sideB(b), sideC(c) {}
+
+    double area() const override {
+        double s = (sideA + sideB + sideC) / 2;
+        return sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
+    }
+
+    double perimeter() const override {
+        return sideA + sideB + sideC;
+    }
+};
+
+int main() {
+    std::vector<Shape*> shapes;
+    shapes.push_back(new Circle(5));
+    shapes.push_back(new Rectangle(4, 5));
+    shapes.push_back(new Triangle(3, 4, 5));
+
+    for (Shape* shape : shapes) { //iterating over all the objects in our array. right now we have circle, rectangle, and triangle
+        std::cout << "Area: " << shape->area() << ", Perimeter: " << shape->perimeter() << std::endl;
+    }
+
+    // Clean up to free up memory
+    for (Shape* shape : shapes) {
+        delete shape;
+    }
+
+    return 0;
+}
+
+
