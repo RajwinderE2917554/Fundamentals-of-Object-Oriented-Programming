@@ -1,14 +1,119 @@
-Task-1:
+Name :- tanvi 
+Class:- BCA-2C2
+Roll no :- 2310997302
+ 
+TASK 1 SOLUTION:- 
 
-Suppose you are working on a geometry library that deals with different types of geometric shapes, including circles, rectangles, and triangles. 
-Each shape has common properties like area and perimeter, but also specific attributes such as radius for circles, length and width for rectangles, and side lengths for triangles.
+#include <iostream>
+using namespace std;
+class rectangle
+{
+protected:
+    int length;
+    int breadth;
 
-•	Develop a class hierarchy for geometric shapes using inheritance in C++.
-•	Explain how you would utilize inheritance and polymorphism to implement algorithms for calculating area and perimeter that are specific to each type of shape
+public:
+    void getData(int len, int bre)
+    {
+        length = len;
+        breadth = bre;
+    }
+};
+class circle
+{
+protected:
+    int radius;
+
+public:
+    void getData(int rad)
+    {
+        radius = rad;
+    }
+};
+class triangle
+{
+protected:
+    float height;
+    float base;
+
+public:
+    void getData(float h, float b)
+    {
+        height = h;
+        base = b;
+    }
+};
+class square
+{
+protected:
+    float side;
+
+public:
+    void getData(float s)
+    {
+        side = s;
+    }
+};
+
+class shape : public rectangle, public circle, public triangle, public square 
+{
+public:
+    shape()
+    {
+        rectangle::getData(10, 20);
+        circle::getData(5);
+        triangle::getData(10.5, 20.5);
+        square::getData(10);
+    }
+    void display()
+    {
+        cout << "Area of rectangle: " << length * breadth << endl;
+        cout << "Area of circle: " << 3.14 * radius * radius << endl;
+        cout << "Area of triangle: " << 0.5 * height * base << endl;
+        cout << "Area of square: " << side * side << endl;
+    }
+};
+
+int main()
+{
+    shape obj;
+    obj.display();
+    // obj.getData(10, 20);
+    // obj.getData(5);
+    // obj.getData(10.5, 20.5);
+    // obj.getData(10);
+    return 0;
+}
+
+TASK 2 SOLUTION:
+
+#include<iostream>
+using namespace std;
+class complex{
+    int real;
+    int img;
+    public:
+    complex(int real, int img){
+        this->real = real;
+        this->img = img;
+    }
+
+     friend complex operator+( complex c1,  complex c2);
+     void display(){
+        cout<<real<<" + "<<img<<"i"<<endl;
+     }
+
+};
+complex operator+( complex  c1, complex c2){
+    return complex(c1.real+c2.real, c1.img+c2.img);
+}
 
 
-Task-2:
 
-An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
-When overloading binary operators as friend functions, external functions can access private members of a class.
-Provide examples how binary operator overloading is implemented using friend functions. 
+int main(){
+    complex c1(101,25);
+    complex c2(156,27);
+    complex result = c1+c2;
+    result.display();
+    return 0;
+}
