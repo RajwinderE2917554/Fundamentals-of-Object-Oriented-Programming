@@ -12,3 +12,169 @@ Task-2:
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+
+2310997280
+BCA 2C 
+
+TASK 1
+
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+class Shape
+{
+public:
+    virtual double getArea() = 0;
+    virtual double getPerimeter() = 0;
+};
+
+class Rectangle : public Shape
+{
+private:
+    double len;
+    double brd;
+
+public:
+    Rectangle(double length, double width)
+    {
+        len = length;
+        brd = width;
+    }
+
+    double getArea()
+    {
+        return len * brd;
+    }
+
+    double getPerimeter()
+    {
+        return 2 * (len + brd);
+    }
+
+    double getArea(double length1, double width1, double angle)
+    {
+        double sec_area = angle / 360.0 * length1 * width1;
+        return sec_area;
+    }
+};
+
+class Triangle : public Shape
+{
+private:
+    double s1,s2,s3,h,b;
+
+public:
+    Triangle(double sideA, double sideB, double sideC, double height, double base)
+    {
+        s1 = sideA;
+        s2 = sideB;
+        s3 = sideC;
+        h = height;
+        b = base;
+    }
+
+    double getArea()
+    {
+        double s = (b * h) / 2;
+        return s;
+    }
+
+    double getPerimeter()
+    {
+        return s1 + s2 + s3;
+    }
+
+    double getArea(double side1, double side2, double side3, double angle)
+    {
+        double area_with_heronsformula = sqrt((side1 + side2 + side3) * (-side1 + side2 + side3) * (side1 - side2 + side3) * (side1 + side2 - side3));
+        return (angle / 360.0) * area_with_heronsformula;
+    }
+};
+
+class Circle : public Shape
+{
+private:
+    double rad;
+
+public:
+    Circle(double radius)
+    {
+        rad = radius;
+    }
+
+    double getArea()
+    {
+        return 3.14 * rad * rad;
+    }
+
+    double getPerimeter()
+    {
+        return 2 * 3.14 * rad;
+    }
+
+    double getArea(int r1, int r2, int angle)
+    {
+        double area2 = (angle / 360.0) * 3.14 * r1 * r2;
+        return area2;
+    }
+};
+
+int main()
+{
+    Rectangle obj_of_rectangle(4, 5);
+    Triangle obj_of_triangle(3, 4, 5, 3, 4);
+    Circle obj_of_circle(5);
+
+    cout << "Area of Circle: " << obj_of_circle.getArea() << endl;
+    cout << "Perimeter of Circle: " << obj_of_circle.getPerimeter() << endl;
+    cout << "Area of Rectangle: " << obj_of_rectangle.getArea() << endl;
+    cout << "Perimeter of Rectangle: " << obj_of_rectangle.getPerimeter() << endl;
+    cout << "Area of Triangle: " << obj_of_triangle.getArea() << endl;
+    cout << "Perimeter of Triangle: " << obj_of_triangle.getPerimeter() << endl;
+
+    return 0;
+}
+
+
+Task 2
+
+include <iostream>
+using namespace std;
+class class_2;
+class class_1
+{
+private:
+    float TS;
+
+public:
+    class_1(float TotalSales) : TS(TotalSales) {}
+    friend float operator+(class_1, class_2);
+};
+class class_2
+{
+private:
+    float TS;
+
+public:
+    class_2(float TotalSales) : TS(TotalSales) {}
+    friend float operator+(class_1, class_2);
+};
+float operator+(class_1 obj1, class_2 obj2)
+{
+    return obj1.TS + obj2.TS;
+}
+int main()
+{
+    float sale1, sale2;
+    cout << "enter sales for class 1:";
+    cin >> sale1;
+    cout << "enter sales for class 2:";
+    cin >> sale2;
+
+    class_1 obj1(sale1);
+    class_2 obj2(sale2);
+    float totalsales = obj1 + obj2;
+    cout << "The total sales are : " << totalsales << endl;
+    return 0;
+}
