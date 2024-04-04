@@ -1,0 +1,14 @@
+Task-1:
+
+Suppose you are working on a geometry library that deals with different types of geometric shapes, including circles, rectangles, and triangles. 
+Each shape has common properties like area and perimeter, but also specific attributes such as radius for circles, length and width for rectangles, and side lengths for triangles.
+
+•	Develop a class hierarchy for geometric shapes using inheritance in C++.
+•	Explain how you would utilize inheritance and polymorphism to implement algorithms for calculating area and perimeter that are specific to each type of shape
+
+
+Task-2:
+
+An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
+When overloading binary operators as friend functions, external functions can access private members of a class.
+Provide examples how binary operator overloading is implemented using friend functions. 
