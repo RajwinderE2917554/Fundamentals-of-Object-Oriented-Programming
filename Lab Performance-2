@@ -1,14 +1,105 @@
-Task-1:
+// Task-1:
+// Suppose you are working on a geometry library that deals with different types of geometric shapes, including circles, rectangles, and triangles. 
+// Each shape has common properties like area and perimeter, but also specific attributes such as radius for circles, length and width for rectangles, and side lengths for triangles.
+// •	Develop a class hierarchy for geometric shapes using inheritance in C++.
+// •	Explain how you would utilize inheritance and polymorphism to implement algorithms for calculating area and perimeter that are specific to each type of shape
 
-Suppose you are working on a geometry library that deals with different types of geometric shapes, including circles, rectangles, and triangles. 
-Each shape has common properties like area and perimeter, but also specific attributes such as radius for circles, length and width for rectangles, and side lengths for triangles.
+#include <iostream>
+#include <cmath>
+using namespace std;
 
-•	Develop a class hierarchy for geometric shapes using inheritance in C++.
-•	Explain how you would utilize inheritance and polymorphism to implement algorithms for calculating area and perimeter that are specific to each type of shape
+class Shape 
+{
+public:
+    virtual double area() const = 0;
+    virtual double perimeter() const = 0;
+    virtual ~Shape() {}
+};
+class Circle : public Shape 
+{
+private:
+    double radius;
+public:
+    Circle(double r) : radius(r) {}
+    double area() const override { return M_PI * radius * radius; }
+    double perimeter() const override { return 2 * M_PI * radius; }
+};
+class Rectangle : public Shape 
+{
+private:
+    double length;
+    double width;
+public:
+    Rectangle(double l, double w) : length(l), width(w) {}
+    double area() const override { return length * width; }
+    double perimeter() const override { return 2 * (length + width); }
+};
+class Triangle : public Shape 
+{
+private:
+    double side1, side2, side3;
+public:
+    Triangle(double s1, double s2, double s3) : side1(s1), side2(s2), side3(s3) {}
+    double area() const override {
+        double s = (side1 + side2 + side3) / 2;
+        return sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+    double perimeter() const override { return side1 + side2 + side3; }
+};
+
+int main() 
+{
+    Circle circle(5);
+    Rectangle rectangle(4, 6);
+    Triangle triangle(3, 4, 5);
+    cout << "Circle: Area = " << circle.area() << ", Perimeter = " << circle.perimeter() << endl;
+    cout << "Rectangle: Area = " << rectangle.area() << ", Perimeter = " << rectangle.perimeter() << endl;
+    cout << "Triangle: Area = " << triangle.area() << ", Perimeter = " << triangle.perimeter() << endl;
+
+    return 0;
+}
 
 
-Task-2:
+// Task-2:
+// An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
+// When overloading binary operators as friend functions, external functions can access private members of a class.
+// Provide examples how binary operator overloading is implemented using friend functions. 
 
-An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
-When overloading binary operators as friend functions, external functions can access private members of a class.
-Provide examples how binary operator overloading is implemented using friend functions. 
+#include <iostream>
+using namespace std;
+
+class Complex 
+{
+private:
+    double real;
+    double imaginary;
+public:
+    Complex(double r = 0, double i = 0) : real(r), imaginary(i) {}
+    friend Complex operator+(const Complex& c1, const Complex& c2) 
+    {
+        return Complex(c1.real + c2.real, c1.imaginary + c2.imaginary);
+    }
+    friend Complex operator-(const Complex& c1, const Complex& c2) 
+    {
+        return Complex(c1.real - c2.real, c1.imaginary - c2.imaginary);
+    }
+    void display() 
+    {
+        cout << "Real: " << real << ", Imaginary: " << imaginary << endl;
+    }
+};
+
+int main() 
+{
+    Complex c1(3, 2);
+    Complex c2(1, 4);
+    Complex sum = c1 + c2;
+    cout << "Sum: ";
+    sum.display();
+    Complex diff = c1 - c2;
+    cout << "Difference: ";
+    diff.display();
+
+    return 0;
+}
+
