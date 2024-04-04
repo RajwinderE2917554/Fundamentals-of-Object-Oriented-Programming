@@ -12,3 +12,124 @@ Task-2:
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Name:     Hishita Gupta
+Roll no:  2310997107
+Class:    BCA-2C1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Task-1
+
+#include <iostream>
+using namespace std;
+
+class shape{
+	protected:
+	float area,peri;
+	public:
+		void display(){
+			cout<<"Area is:"<<area<<endl;
+			cout<<"Perimeter is:"<<peri<<endl;
+		}			
+};
+
+class circle: public shape {
+	float radius;
+	public:
+		void getdata(float r){
+			radius=r;
+		}
+		void AreaAndPeri(){
+			area=(22.0/7)*radius*radius;
+			peri=2.0*(22.0/7)*radius;
+		}
+	
+	};
+	
+class rectangle : public shape {
+   float len,bre;
+	public:
+		void getdata(float l,float b){
+			len=l; bre=b;
+		}
+		void AreaAndPeri(){
+			area=len*bre;
+			peri=2.0*(len+bre);
+		}
+	
+	};
+class triangle : public shape {
+   float base,height,s3;
+	public:
+		void getdata(float b,float h,float s){
+			base=b; height=h; s3=s;
+		}
+		void AreaAndPeri(){
+			area=0.5*(base*height);
+			peri=base+height+s3;
+		}
+	
+	};
+	
+int main(){
+	cout<<"Circle"<<endl;
+    circle c;
+    c.getdata(1.0);
+    c.AreaAndPeri();
+	c.display();
+	
+	cout<<"Rectangle"<<endl;
+	rectangle r;
+	r.getdata(1.0,2.0);
+	r.AreaAndPeri();
+	r.display();
+	
+	cout<<"Triangle"<<endl;
+	triangle t;
+	t.getdata(1.0,2.0,3.0);
+	t.AreaAndPeri();
+	t.display();
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Task-2
+
+#include<iostream>
+using namespace std;
+
+class Sample{
+	int a,b;
+	public:
+		
+		 Sample(){};
+		
+		 Sample(int a,int b){
+		 	this->a=a;
+		 	this->b=b;
+		 }
+		 
+		 friend Sample operator +(Sample,Sample);
+		 
+		 void display(){
+		 	cout<<"Value a:"<<a<<endl;
+		 	cout<<"Value b:"<<b<<endl;
+		 }
+};
+
+Sample operator + (Sample s1,Sample s2){
+	Sample s3;
+	s3.a=s1.a+s2.a;
+	s3.b=s1.b+s2.b;
+	return s3;
+}
+
+int main(){
+	Sample s1(2,2);
+	Sample s2(3,3);
+	Sample s3=s1+s2;
+	s3.display();
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------
