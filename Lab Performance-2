@@ -6,9 +6,120 @@ Each shape has common properties like area and perimeter, but also specific attr
 •	Develop a class hierarchy for geometric shapes using inheritance in C++.
 •	Explain how you would utilize inheritance and polymorphism to implement algorithms for calculating area and perimeter that are specific to each type of shape
 
+#include <iostream>
+using namespace std;
+
+class rectangle{
+protected:
+    int length;
+    int breadth;
+
+public:
+    void getData(int len, int bre)
+    {
+        length = len;
+        breadth = bre;
+    }
+};
+
+class circle{
+protected:
+    int r;
+
+public:
+    void getData(int r)
+    {
+        this->r = r;
+    }
+};
+
+class triangle{
+protected:
+    float h;
+    float b;
+
+public:
+    void getData(float height, float base)
+    {
+        h = height;
+        b = base;
+    }
+};
+
+class square{
+protected:
+    float s;
+
+public:
+    void getData(float side)
+    {
+        s = side;
+    }
+};
+
+class shape : public rectangle, public circle, public triangle, public square //  used multiple inheritance 
+{
+public:
+    shape()
+    {
+        rectangle::getData(10, 15);
+        circle::getData(5);
+        triangle::getData(10, 14);
+        square::getData(20);
+    }
+    
+    void display()
+    {
+        cout << "Area of rectangle: " << length * breadth << endl;
+        cout << "Area of circle: " << 3.14 * r * r << endl;
+        cout << "Area of triangle: " << 0.5 * h * b << endl;
+        cout << "Area of square: " << s*s << endl;
+    }
+};
+
+int main()
+{
+    shape obj;
+    obj.display();
+    return 0;
+}
+
 
 Task-2:
 
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+
+#include<iostream>
+using namespace std;
+class complex{
+    int real;
+    int img;
+    
+    public:
+    	
+    complex(int r, int i){
+        real = r;
+        img = i;
+    }
+
+     friend complex operator+( complex c,  complex C);
+     
+     void putdata(){
+        cout<<"Complex No =  "<<real<<" + "<<img<<"i"<<endl;
+     }
+
+};
+complex operator+( complex  c, complex C){
+    return complex(c.real+C.real, c.img+C.img);
+}
+
+int main(){
+    complex c(28,25);
+    complex C(28,27);
+    complex result = c+C;
+    result.putdata();
+    return 0;
+}
+
