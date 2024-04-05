@@ -12,3 +12,136 @@ Task-2:
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+GitHub task 1
+
+#include <iostream>
+#include <cmath>
+
+// Base class for all shapes
+class Shape {
+public:
+    virtual double area() const = 0; // Pure virtual function
+    virtual double perimeter() const = 0; // Pure virtual function
+};
+
+// Circle class
+class Circle : public Shape {
+private:
+    double radius;
+public:
+    Circle(double r) : radius(r) {}
+
+    // Calculate area of circle
+    double area() const override {
+        return M_PI * radius * radius;
+    }
+
+    // Calculate perimeter of circle
+    double perimeter() const override {
+        return 2 * M_PI * radius;
+    }
+};
+
+// Rectangle class
+class Rectangle : public Shape {
+private:
+    double length;
+    double width;
+public:
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    // Calculate area of rectangle
+    double area() const override {
+        return length * width;
+    }
+
+    // Calculate perimeter of rectangle
+    double perimeter() const override {
+        return 2 * (length + width);
+    }
+};
+
+// Triangle class
+class Triangle : public Shape {
+private:
+    double side1;
+    double side2;
+    double side3;
+public:
+    Triangle(double s1, double s2, double s3) : side1(s1), side2(s2), side3(s3) {}
+
+    // Calculate area of triangle using Heron's formula
+    double area() const override {
+        double s = (side1 + side2 + side3) / 2;
+        return sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+
+    // Calculate perimeter of triangle
+    double perimeter() const override {
+        return side1 + side2 + side3;
+    }
+};
+
+int main() {
+    // Creating instances of shapes
+    Circle c(5.0);
+    Rectangle r(4.0, 6.0);
+    Triangle t(3.0, 4.0, 5.0);
+
+    // Displaying area and perimeter of each shape
+    std::cout << "Circle - Area: " << c.area() << ", Perimeter: " << c.perimeter() << std::endl;
+    std::cout << "Rectangle - Area: " << r.area() << ", Perimeter: " << r.perimeter() << std::endl;
+    std::cout << "Triangle - Area: " << t.area() << ", Perimeter: " << t.perimeter() << std::endl;
+
+    return 0;
+}
+
+
+
+GitHub task 2
+#include <iostream>
+
+class Complex {
+private:
+    double real;
+    double imaginary;
+
+public:
+    Complex(double real, double imaginary) : real(real), imaginary(imaginary) {}
+
+    double getReal() const {
+        return real;
+    }
+
+    double getImaginary() const {
+        return imaginary;
+    }
+
+    friend Complex operator+(const Complex& c1, const Complex& c2);
+    friend Complex operator-(const Complex& c1, const Complex& c2);
+};
+
+Complex operator+(const Complex& c1, const Complex& c2) {
+    double realSum = c1.real + c2.real;
+    double imaginarySum = c1.imaginary + c2.imaginary;
+    return Complex(realSum, imaginarySum);
+}
+
+Complex operator-(const Complex& c1, const Complex& c2) {
+    double realDiff = c1.real - c2.real;
+    double imaginaryDiff = c1.imaginary - c2.imaginary;
+    return Complex(realDiff, imaginaryDiff);
+}
+
+int main() {
+    Complex c1(2, 3);
+    Complex c2(1, 4);
+
+    Complex sum = c1 + c2;
+    Complex difference = c1 - c2;
+
+    std::cout << "Sum: " << sum.getReal() << " + " << sum.getImaginary() << "i" << std::endl;
+    std::cout << "Difference: " << difference.getReal() << " + " << difference.getImaginary() << "i" << std::endl;
+
+    return 0;
+}
