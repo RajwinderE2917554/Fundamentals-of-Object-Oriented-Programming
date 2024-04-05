@@ -6,9 +6,121 @@ Each shape has common properties like area and perimeter, but also specific attr
 •	Develop a class hierarchy for geometric shapes using inheritance in C++.
 •	Explain how you would utilize inheritance and polymorphism to implement algorithms for calculating area and perimeter that are specific to each type of shape
 
+#include <iostream>
+using namespace std;
+
+class rectangle{
+protected:
+    int length;
+    int breadth;
+
+public:
+    void getData(int len, int bre)
+    {
+        length = len;
+        breadth = bre;
+    }
+};
+
+class circle{
+protected:
+    int radius;
+
+public:
+    void getData(int r)
+    {
+        radius = r;
+    }
+};
+
+class triangle{
+protected:
+    float height;
+    float base;
+
+public:
+    void getData(float height, float base)
+    {
+        this->height = height;
+        this->base = base;
+    }
+};
+
+class square{
+protected:
+    float side;
+
+public:
+    void getData(float side)
+    {
+        this->side = side;
+    }
+};
+
+class shape : public rectangle, public circle, public triangle, public square //  used multiple inheritance 
+{
+public:
+    shape()
+    {
+        rectangle::getData(10, 10);
+        circle::getData(10);
+        triangle::getData(10, 30);
+        square::getData(15);
+    }
+    
+    void display()
+    {
+    	cout<<"-------------------------------------------\n";
+        cout << "Area of rectangle: " << length * breadth << endl;
+        cout << "Area of circle: " << 3.14 * radius * radius << endl;
+        cout << "Area of triangle: " << 0.5 * height * base << endl;
+        cout << "Area of square: " << side * side << endl;
+        cout<<"\n------------------------------------------";
+    }
+};
+
+int main()
+{
+    shape obj;
+    obj.display();
+    return 0;
+}
+
 
 Task-2:
 
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+
+#include<iostream>
+using namespace std;
+class complex{
+    int real;
+    int img;
+    
+    public:
+    	
+    complex(int r, int i){
+        real = r;
+        img = i;
+    }
+
+     friend complex operator+( complex c1,  complex c2);
+     
+     void putdata(){
+        cout<<"Complex Number: "<<real<<" + "<<img<<"i"<<endl;
+     }
+
+};
+complex operator+( complex  c1, complex c2){
+    return complex(c1.real+c2.real, c1.img+c2.img);
+}
+
+int main(){
+    complex c1(28,25);
+    complex c2(28,27);
+    complex result = c1+c2;
+    result.putdata();
+    return 0;
+}
