@@ -12,3 +12,143 @@ Task-2:
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+Task-1:
+#include<iostream>
+using namespace std;
+class shapes{
+    public:
+    // double length,width,radius,rec,circ,trig;
+    // int side;
+    double area(){
+        return -1;
+    }
+    double perimeter(){
+    return -1;
+    }
+
+};
+class circle:public shapes{
+    private:
+    double rad;
+    public:
+    circle(double ra){
+        rad=ra;}
+    double area(){
+        return 2*3.14*rad*rad;
+    }
+    double perimeter(){
+        return 2*3.14*rad;
+    }
+};
+class rectangle:public shapes{
+private:
+double length;
+double bredth;
+public:
+rectangle(double l,double w){
+    length=l;
+    bredth=w;
+}
+double area(){
+    return length*bredth;
+}
+double perimeter(){
+    return 2*(length + bredth);
+}
+
+};
+class triangle:public shapes{
+private:
+int side,side1,side2;
+public:
+triangle(double a,double  b,double c){
+    side=a;
+    side1=b;
+    side2=c;
+}
+double area(){
+    return (side*side1)*1/2;
+}
+double perimeter(){
+    return side+side1+side2;
+}
+};
+int main(){
+    double ab,cd,ef,gh,ij,kl;
+    cout<<"Aryan narang"<<endl;
+    cout<<"2310997044"<<endl;
+    
+    cout<<"enter the value of radius"<<endl;
+    cin>>ab;
+    circle obj(ab);
+    cout<<"area of circle ="<<obj.area()<<endl;
+    cout<<"perimeter of circle ="<<obj.perimeter()<<endl;
+     cout<<"enter the value of lenght and bredth"<<endl;
+     cin>>cd>>ef;
+    rectangle obj1(cd,ef);
+    cout<<"Area of rectangle ="<<obj1.area()<<endl;
+    cout<<"Perimetre of rectangle ="<<obj1.perimeter()<<endl;
+    cout<<"enter the value of side 1,side 2 and side 3"<<endl;
+    cin>>gh>>ij>>kl;
+    triangle obj2(gh,ij,kl);
+    cout<<"area of circle ="<<obj2.area()<<endl;
+    cout<<"perimeter of circle ="<<obj2.perimeter()<<endl;
+    return 0;
+
+
+
+}
+
+
+Task -2:
+#include<iostream>
+using namespace std;
+class opreatorover{
+  
+    int no1,no2;
+    public:
+    void put_data(){
+        cout<<"enter thbe first number "<<endl;
+        cin>>no1;
+        cout<<"enter the second number "<<endl;
+        cin>>no2;
+    }
+    friend opreatorover operator +(opreatorover &s1,opreatorover &s2);
+       friend opreatorover operator -(opreatorover &g1,opreatorover &g2);
+       void get_data(){
+        cout<<"Value of first numbers after addition="<<no1<<endl;
+         cout<<"Value of second numbers after addition="<<no2<<endl;
+       }
+       void get_data2(){
+        cout<<"value of first number after substraction ="<<no1<<endl;
+        cout<<"value of second number after substraction ="<<no2<<endl;
+       }
+
+
+
+};
+ opreatorover operator +(opreatorover &s1,opreatorover &s2){
+    opreatorover sum;
+    sum.no1=s1.no1+s2.no1;
+    sum.no2=s1.no2+s2.no2;
+    return sum;
+}
+opreatorover operator -(opreatorover &g1,opreatorover &g2){
+    opreatorover sub;
+    sub.no1=g1.no1-g2.no1;
+    sub.no2=g1.no2-g2.no2;
+    return sub;
+}
+int main(){
+    opreatorover obj1,obj2,obsum,obsub;
+    obj1.put_data();
+     obj2.put_data();
+     obsum=obj1+obj2;
+     obsub=obj1-obj2;
+    cout<<"\n\n";
+    obsum.get_data();
+    obsub.get_data2();
+
+    return 0;
+
+}
