@@ -12,3 +12,152 @@ Task-2:
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+
+--------------------------TASK 1----------------------
+#include <iostream>
+#include <cmath> 
+
+using namespace std;
+// base class
+class Shape {
+public:
+  virtual double getArea() const = 0;
+  virtual double getPerimeter() const = 0;
+
+  virtual ~Shape() = default;
+};
+// class circle
+class Circle : public Shape {
+private:
+  double radius;
+public:
+  Circle() {
+    cout << "Enter the radius of the circle: ";
+    cin >> radius;
+    if (radius <= 0) {
+      cerr << "Error: Radius must be positive." << endl;
+      radius = -1; 
+    }
+  }
+  double getArea() const override { return M_PI * radius * radius; }
+  double getPerimeter() const override { return 2 * M_PI * radius; }
+};
+//class rectangle
+class Rectangle : public Shape {
+private:
+  double length;
+  double width;
+public:
+  Rectangle() {
+    cout << "Enter the length and width of the rectangle: ";
+    cin >> length >> width;
+    if (length <= 0 || width <= 0) {
+      cerr << "Error: Length and width must be positive." << endl;
+      length = width = -1; 
+    }
+  }
+  double getArea() const override { return length * width; }
+  double getPerimeter() const override { return 2 * (length + width); }
+};
+//class triangle
+class Triangle : public Shape {
+private:
+  double side1;
+  double side2;
+  double side3;
+public:
+  Triangle() {
+    cout << "Enter the three sides of the triangle: ";
+    cin >> side1 >> side2 >> side3;
+    if (!isValid()) {
+      cerr << "Error: Invalid triangle sides " << endl;
+      side1 = side2 = side3 = -1; 
+    }
+  }
+
+  bool isValid() const {
+    return (side1 + side2 > side3) && (side1 + side3 > side2) && (side2 + side3 > side1);
+  }
+
+  double getArea() const override {
+    if (!isValid()) {
+      return -1; 
+    }
+    double s = (side1 + side2 + side3) / 2; 
+    return sqrt(s * (s - side1) * (s - side2) * (s - side3)); 
+  }
+
+  double getPerimeter() const override {
+    if (!isValid()) {
+      return -1; 
+    }
+    return side1 + side2 + side3;
+  }
+};
+
+int main() {
+  int choice;
+
+  cout << "Select a shape \n press 1 for Circle \n press 2 for Rectangle\n press 3 for Triangle "<<endl;
+  cin >> choice;
+
+  if (choice == 1) {
+    Circle circle;
+    cout << "Circle Area: " << circle.getArea() << endl;
+    cout << "Circle Perimeter: " << circle.getPerimeter() << endl;
+  } else if (choice == 2) {
+    Rectangle rect;
+    cout << "Rectangle Area: " << rect.getArea() << endl;
+    cout << "Rectangle Perimeter: " << rect.getPerimeter() << endl;
+  } else if (choice == 3) {
+    Triangle triangle;
+    cout << "Triangle Area (if valid): " << triangle.getArea() << endl;
+    cout << "Triangle Perimeter (if valid): " << triangle.getPerimeter() << endl;
+  } else {
+    cerr << "Invalid choice." << endl;
+  }
+
+  return 0;
+}
+
+--------------------------TASK 2-------------------------------
+
+#include <iostream>
+using namespace std;
+
+class ComplexNumber {
+private:
+    double real;
+    double imag;
+
+public:
+    ComplexNumber(double real = 0, double imag = 0) : real(real), imag(imag) {}
+    friend ComplexNumber operator+(const ComplexNumber& a, const ComplexNumber& b);
+
+    
+    friend ostream& operator<<(ostream& out, const ComplexNumber& c);
+
+    
+    double getReal() const { return real; }
+    double getImag() const { return imag; }
+};
+
+
+ComplexNumber operator+(const ComplexNumber& a, const ComplexNumber& b) {
+    return ComplexNumber(a.real + b.real, a.imag + b.imag);
+}
+
+ostream& operator<<(ostream& out, const ComplexNumber& c) {
+    out << c.real << " + " << c.imag << "i";
+    return out;
+}
+
+int main() {
+    ComplexNumber c1(2, 3);
+    ComplexNumber c2(4, -1);
+
+    ComplexNumber c3 = c1 + c2;  
+    cout << "c3 =  " << c3 << endl;
+
+    return 0;
+}
