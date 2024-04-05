@@ -5,6 +5,78 @@ Each shape has common properties like area and perimeter, but also specific attr
 
 •	Develop a class hierarchy for geometric shapes using inheritance in C++.
 •	Explain how you would utilize inheritance and polymorphism to implement algorithms for calculating area and perimeter that are specific to each type of shape
+#include <iostream>
+#include <cmath>
+class Shape {
+public:
+    virtual double area() const = 0; 
+    virtual double perimeter() const = 0; 
+    virtual ~Shape() {} 
+};
+
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : radius(r) {}
+
+    double area() const override {
+        return M_PI * radius * radius;
+    }
+
+    double perimeter() const override {
+        return 2 * M_PI * radius;
+    }
+};
+
+class Rectangle : public Shape {
+private:
+    double length;
+    double width;
+
+public:
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    double area() const override {
+        return length * width;
+    }
+
+    double perimeter() const override {
+        return 2 * (length + width);
+    }
+};
+
+class Triangle : public Shape {
+private:
+    double side1;
+    double side2;
+    double side3;
+
+public:
+    Triangle(double s1, double s2, double s3) : side1(s1), side2(s2), side3(s3) {}
+
+    double area() const override {
+        double s = (side1 + side2 + side3) / 2;
+        return sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+
+    double perimeter() const override {
+        return side1 + side2 + side3;
+    }
+};
+
+int main() {
+    Circle circle(5.0);
+    Rectangle rectangle(4.0, 6.0);
+    Triangle triangle(3.0, 4.0, 5.0);
+
+    std::cout << "Circle - Area: " << circle.area() << ", Perimeter: " << circle.perimeter() << std::endl;
+    std::cout << "Rectangle - Area: " << rectangle.area() << ", Perimeter: " << rectangle.perimeter() << std::endl;
+    std::cout << "Triangle - Area: " << triangle.area() << ", Perimeter: " << triangle.perimeter() << std::endl;
+
+    return 0;
+}
 
 
 Task-2:
@@ -12,3 +84,43 @@ Task-2:
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+#include <iostream>
+using namespace std;
+class MyNumber {
+private:
+    int number;
+
+public:
+    MyNumber(int num) : number(num) {}
+
+    friend MyNumber operator+(const MyNumber& num1, const MyNumber& num2);
+
+    friend MyNumber operator-(const MyNumber& num1, const MyNumber& num2);
+
+    void display() const {
+        std::cout << "Number: " << number << std::endl;
+    }
+};
+MyNumber operator+(const MyNumber& num1, const MyNumber& num2) {
+    return MyNumber(num1.number + num2.number);
+}
+
+MyNumber operator-(const MyNumber& num1, const MyNumber& num2) {
+    return MyNumber(num1.number - num2.number);
+}
+
+int main() {
+    MyNumber num1(2);
+    MyNumber num2(5);
+
+    MyNumber sum = num1 + num2;
+    MyNumber difference = num1 - num2;
+
+    std::cout << "Sum: ";
+    sum.display();
+
+    std::cout << "Difference: ";
+    difference.display();
+
+    return 0;
+}
