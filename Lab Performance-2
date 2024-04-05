@@ -12,3 +12,123 @@ Task-2:
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+
+*****************************************************************************************************************************************************
+task-1
+#include <iostream>
+#include<cmath>
+using namespace std;
+
+class shape 
+{
+public:
+  virtual float getArea() const = 0;
+  virtual float getPerimeter() const = 0;
+
+protected:
+};
+
+class circle : public shape {
+private:
+  double radius;
+
+public:
+  circle(double radius) : radius(radius) {}
+  float getArea() const override { return 3.14159 * radius * radius; }
+  float getPerimeter() const override { return 2 * 3.14159 * radius; }
+};
+
+class rectangle : public shape {
+private:
+  double length;
+  double breadth;
+
+public:
+  rectangle(float length, float breadth) : length(length), breadth(breadth) {}
+  float getArea() const override { return length * breadth; }
+  float getPerimeter() const override { return 2 * (length + breadth); }
+};
+
+class triangle : public shape {
+private:
+  float s1;
+  float s2;
+  float s3;
+
+public:
+  triangle(float s1, float s2, float s3) : s1(s1), s2(s2), s3(s3) 
+  {
+    if (!isValidtriangle()) {
+      cout<<"Invalid triangle side lengths";
+    }
+  }
+
+  bool isValidtriangle() const {
+    return (s1 + s2 > s3) && (s1 + s3 > s2) && (s2 + s3 > s1);
+  }
+
+  float getArea() const override {
+    float s = (s1 + s2 + s3) / 2.0;
+    return sqrt(s * (s - s1) * (s - s2) * (s - s3));
+  }
+
+  float getPerimeter() const override { return s1 + s2 + s3; }
+};
+
+int main() {
+  circle circle(3.0);
+  rectangle rect(2.0, 8.0);
+  triangle triangle(5.0, 3.0, 4.0);
+
+  cout << "circle area: " << circle.getArea() <<endl;
+  cout << "circle perimeter: " << circle.getPerimeter() <<endl<<endl<<endl;
+
+  cout << "rectangle area: " << rect.getArea() << std::endl;
+  cout << "rectangle perimeter: " << rect.getPerimeter() <<endl<<endl<<endl;
+
+  cout << "triangle area: " << triangle.getArea() <<endl;
+  cout << "triangle perimeter: " << triangle.getPerimeter()<<endl<<endl<<endl;
+
+  return 0;
+}
+********************************************************************************************************************************
+
+task-2
+#include <iostream>
+using namespace std;
+
+class complex {
+private:
+    int real;
+    int imaginary;
+
+public:
+    complex(int r = 0, int i = 0) : real(r), imaginary(i) {}
+
+    friend complex operator+(const complex& c1, const complex& c2);
+    friend complex operator-(const complex& c1, const complex& c2);
+
+    void display() {
+        cout << real << " + " << imaginary << "i" << endl;
+    }
+};
+
+complex operator+(const complex& c1, const complex& c2) {
+    return complex(c1.real + c2.real, c1.imaginary + c2.imaginary);
+}
+
+complex operator-(const complex& c1, const complex& c2) {
+    return complex(c1.real - c2.real, c1.imaginary - c2.imaginary);
+}
+
+int main() {
+    complex num1(7,5), num2(4,2);
+    complex sum = num1 + num2;
+    complex diff = num1 - num2;
+
+    cout << "Sum: "; sum.display();
+    cout << "Difference: "; diff.display();
+
+    return 0;
+}
+******************************************************************************************************************************************
