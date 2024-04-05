@@ -12,3 +12,135 @@ Task-2:
 An operator overloading allows custom behavior to be defined for built-in operators like addition (+), subtraction (-), when we used with user-defined types.
 When overloading binary operators as friend functions, external functions can access private members of a class.
 Provide examples how binary operator overloading is implemented using friend functions. 
+
+
+
+
+Task 1 code:
+
+#include <iostream>
+#include <cmath>
+
+// Base class for geometric shapes
+class Shape {
+public:
+    virtual double area() const = 0; // Pure virtual function for area calculation
+    virtual double perimeter() const = 0; // Pure virtual function for perimeter calculation
+};
+
+// Circle class derived from Shape
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : radius(r) {}
+
+    // Override area calculation for circles
+    double area() const override {
+        return M_PI * radius * radius;
+    }
+
+    // Override perimeter calculation for circles
+    double perimeter() const override {
+        return 2 * M_PI * radius;
+    }
+};
+
+// Rectangle class derived from Shape
+class Rectangle : public Shape {
+private:
+    double length;
+    double width;
+
+public:
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    // Override area calculation for rectangles
+    double area() const override {
+        return length * width;
+    }
+
+    // Override perimeter calculation for rectangles
+    double perimeter() const override {
+        return 2 * (length + width);
+    }
+};
+
+// Triangle class derived from Shape
+class Triangle : public Shape {
+private:
+    double side1;
+    double side2;
+    double side3;
+
+public:
+    Triangle(double s1, double s2, double s3) : side1(s1), side2(s2), side3(s3) {}
+
+    // Override area calculation for triangles using Heron's formula
+    double area() const override {
+        double s = (side1 + side2 + side3) / 2;
+        return sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+
+    // Override perimeter calculation for triangles
+    double perimeter() const override {
+        return side1 + side2 + side3;
+    }
+};
+
+int main() {
+    Circle circle(5);
+    Rectangle rectangle(4, 6);
+    Triangle triangle(3, 4, 5);
+
+    std::cout << "Circle Area: " << circle.area() << ", Perimeter: " << circle.perimeter() << std::endl;
+    std::cout << "Rectangle Area: " << rectangle.area() << ", Perimeter: " << rectangle.perimeter() << std::endl;
+    std::cout << "Triangle Area: " << triangle.area() << ", Perimeter: " << triangle.perimeter() << std::endl;
+
+    return 0;
+}
+
+
+Task 2 code:
+
+#include <iostream>
+
+class Complex {
+private:
+    double real;
+    double imag;
+
+public:
+    Complex(double r = 0, double i = 0) : real(r), imag(i) {}
+
+    // Overloading the addition operator using friend function
+    friend Complex operator+(const Complex &c1, const Complex &c2) {
+        return Complex(c1.real + c2.real, c1.imag + c2.imag);
+    }
+
+    // Overloading the subtraction operator using friend function
+    friend Complex operator-(const Complex &c1, const Complex &c2) {
+        return Complex(c1.real - c2.real, c1.imag - c2.imag);
+    }
+
+    // Display function
+    void display() {
+        std::cout << "(" << real << " + " << imag << "i)" << std::endl;
+    }
+};
+
+int main() {
+    Complex c1(2, 3);
+    Complex c2(1, 2);
+
+    Complex sum = c1 + c2;
+    Complex diff = c1 - c2;
+
+    std::cout << "Sum: ";
+    sum.display();
+    std::cout << "Difference: ";
+    diff.display();
+
+    return 0;
+}
